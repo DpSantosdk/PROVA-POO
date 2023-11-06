@@ -11,11 +11,14 @@ class postagem {
     constructor(perfil, texto) {
         this.foiCurtida = false;
         this.foiDescurtida = false;
+        this.EmAlta = false;
         this.id = 0;
         this.perfil = perfil;
         this.texto = texto;
         this.curtidas = 0;
         this.descurtidas = 0;
+        this.foiCurtida = false;
+        this.foiDescurtida = false;
         this.data = new Date().toLocaleDateString();
     }
     get_perfil() {
@@ -33,31 +36,20 @@ class postagem {
     get_data() {
         return this.data;
     }
-    curtir() {
-        if (!this.foiCurtida) {
-            this.curtidas++;
-            this.descurtidas--;
-            if (this.descurtidas < 0) {
-                this.descurtidas = 0;
-            }
-            this.foiCurtida = true;
-        }
-        else {
-            console.log("Você já curtiu esta postagem.");
+    get_emalta() {
+        return this.EmAlta;
+    }
+    EhPopular() {
+        if (this.curtidas - this.descurtidas > (this.curtidas / 2)) {
+            this.EmAlta = true;
         }
     }
-    descurtir() {
-        if (!this.foiDescurtida) {
-            this.descurtidas++;
-            this.curtidas--;
-            if (this.curtidas < 0) {
-                this.curtidas = 0;
-            }
-            this.foiDescurtida = true;
-        }
-        else {
-            console.log("Você já descurtiu esta postagem.");
-        }
+    curtir(perfil) {
+        this.curtidas++;
+        this.EhPopular();
+    }
+    descurtir(perfil) {
+        this.descurtidas++;
     }
 }
 exports.postagem = postagem;

@@ -30,10 +30,14 @@ class Perfil {
         console.log("Postagens: \n\n")
         
         for (const postagem of this._postagens) {
+            console.log('------------------------------');
+            if (postagem.get_emalta()) {
+                console.log("***EM ALTA***")
+            }
             console.log(`${postagem.get_texto()}`);
             console.log(`Curtidas: ${postagem.get_curtidas()} | Descurtidas: ${postagem.get_descurtidas()}`);
             console.log(`${postagem.get_data()}`);
-            console.log('------------------------------');
+            console.log('------------------------------\n');
         }
     }
     
@@ -76,22 +80,23 @@ class Perfil {
     }
 
     public curtirPostagem(postagem: postagem) {
-        if (postagem.foiCurtida) {
-            console.log("Você já curtiu esta postagem.");
+        if (!this._postagensInteragidas.includes(postagem)) {
+            postagem.curtir(this);
+            this._postagensInteragidas.push(postagem);
         } else {
-            postagem.foiCurtida = true;
-            postagem.curtir();
+            console.log("Você já interagiu esta postagem.");
         }
     }
     
     public descurtirPostagem(postagem: postagem) {
-        if (postagem.foiDescurtida) {
-            console.log("Você já descurtiu esta postagem.");
+        if (!this._postagensInteragidas.includes(postagem)) {
+            postagem.descurtir(this);
+            this._postagensInteragidas.push(postagem);
         } else {
-            postagem.foiDescurtida = true;
-            postagem.descurtir();
+            console.log("Você já interagiu esta postagem.");
         }
     }
+    
     
 
     public ViuPost(postagem: postagem){

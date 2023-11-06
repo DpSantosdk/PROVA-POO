@@ -180,7 +180,7 @@ class RedeSocial {
                 console.clear();
                 while (true) {
                     console.clear();
-                    var opcao: string = readline.question("1- BUSCAR USUÁRIO \n2- BUSCAR POSTAGEM \n3-SAIR \n>> ");
+                    var opcao: string = readline.question("1- BUSCAR USUÁRIO \n2- BUSCAR POSTAGEM \n3- SAIR \n>> ");
                     switch (opcao) {
                         case "1":
                             console.clear();
@@ -255,9 +255,14 @@ class RedeSocial {
             // Verifica se a postagem atual é uma postagem avançada e se tem visualizações restantes
             if (!(postagemAtual instanceof postagem_avancada) || postagemAtual.VisualizacaoRestante > 0) {
                 console.clear();
+                const perfildaPostagem = postagemAtual.get_perfil();
+
                 console.log(`Postagem ${postagemIndex + 1} de ${todasPostagens.length}`);
                 console.log("------------------------------");
-                console.log(`@${postagemAtual.get_perfil().get_user()} - ${postagemAtual.get_perfil().get_numeroSeguidores()} Seguidores`);
+                if (postagemAtual.get_emalta()) {
+                    console.log("***EM ALTA***")
+                }
+                console.log(`@${perfildaPostagem.get_user()} - ${perfildaPostagem.get_numeroSeguidores()} Seguidores`);
                 console.log(`${postagemAtual.get_texto()} - ${postagemAtual.get_data()}`);
                 if (postagemAtual instanceof postagem_avancada) {
                     const hashtags = postagemAtual.get_hashtags().nome.map(hashtag => `#${hashtag}`);
@@ -293,6 +298,9 @@ class RedeSocial {
                         postagemIndex = (postagemIndex + 1) % todasPostagens.length;
                         break;
                     case "4":
+                        if (postagemAtual instanceof postagem_avancada) {
+                            perfil.ViuPost(postagemAtual);
+                        }
                         this.home(perfil);
                     default:
                         console.log("Opção inválida.");

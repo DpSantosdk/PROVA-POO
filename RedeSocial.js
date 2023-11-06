@@ -159,7 +159,7 @@ class RedeSocial {
                 console.clear();
                 while (true) {
                     console.clear();
-                    var opcao = readline.question("1- BUSCAR USUÁRIO \n2- BUSCAR POSTAGEM \n3-SAIR \n>> ");
+                    var opcao = readline.question("1- BUSCAR USUÁRIO \n2- BUSCAR POSTAGEM \n3- SAIR \n>> ");
                     switch (opcao) {
                         case "1":
                             console.clear();
@@ -226,9 +226,10 @@ class RedeSocial {
             // Verifica se a postagem atual é uma postagem avançada e se tem visualizações restantes
             if (!(postagemAtual instanceof postagens_1.postagem_avancada) || postagemAtual.VisualizacaoRestante > 0) {
                 console.clear();
+                const perfildaPostagem = postagemAtual.get_perfil();
                 console.log(`Postagem ${postagemIndex + 1} de ${todasPostagens.length}`);
                 console.log("------------------------------");
-                console.log(`@${postagemAtual.get_perfil().get_user()} - ${postagemAtual.get_perfil().get_numeroSeguidores} Seguidores`);
+                console.log(`@${perfildaPostagem.get_user()} - ${perfildaPostagem.get_numeroSeguidores()} Seguidores`);
                 console.log(`${postagemAtual.get_texto()} - ${postagemAtual.get_data()}`);
                 if (postagemAtual instanceof postagens_1.postagem_avancada) {
                     const hashtags = postagemAtual.get_hashtags().nome.map(hashtag => `#${hashtag}`);

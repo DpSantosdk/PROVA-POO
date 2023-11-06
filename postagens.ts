@@ -15,8 +15,9 @@ class postagem {
     private curtidas: number;
     private descurtidas: number;
     private data: string;
-    public foiCurtida: boolean = false;
-    public foiDescurtida: boolean = false;
+    private foiCurtida: boolean = false;
+    private foiDescurtida: boolean = false;
+    private EmAlta: boolean = false;
 
     constructor(perfil: Perfil, texto: any) {
         this.id = 0;
@@ -24,6 +25,8 @@ class postagem {
         this.texto = texto;
         this.curtidas = 0;
         this.descurtidas = 0;
+        this.foiCurtida = false;
+        this.foiDescurtida = false;
         this.data = new Date().toLocaleDateString();
     }
 
@@ -47,30 +50,25 @@ class postagem {
         return this.data;
     }
 
-    public curtir() {
-        if (!this.foiCurtida) {
-            this.curtidas++;
-            this.descurtidas--;
-            if (this.descurtidas < 0) {
-                this.descurtidas = 0;
-            }
-            this.foiCurtida = true;
-        } else {
-            console.log("Você já curtiu esta postagem.");
-        }
+
+    public get_emalta(){
+        return this.EmAlta;
     }
 
-    public descurtir() {
-        if (!this.foiDescurtida) {
-            this.descurtidas++;
-            this.curtidas--;
-            if (this.curtidas < 0) {
-                this.curtidas = 0;
-            }
-            this.foiDescurtida = true;
-        } else {
-            console.log("Você já descurtiu esta postagem.");
+    private EhPopular(){
+        if (this.curtidas - this.descurtidas > (this.curtidas / 2)){
+            this.EmAlta = true;
         }
+        
+    }
+
+    public curtir(perfil: Perfil) {
+        this.curtidas++;
+        this.EhPopular();
+    }
+
+    public descurtir(perfil: Perfil) {
+        this.descurtidas++;
     }
 }
 
